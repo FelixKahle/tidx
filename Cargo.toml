@@ -28,6 +28,8 @@ repository = "https://github.com/FelixKahle/tidx"
 readme = "README.md"
 keywords = ["index", "typed", "newtype", "id"]
 categories = ["data-structures", "rust-patterns"]
+# The workflows and the repository's own notes are of no use to someone who builds the crate.
+exclude = [".github/", "SECURITY.md"]
 
 [dependencies]
 # The std traits of `Idx` and its ranges, derived without bounds on the phantom kind. No feature is needed.

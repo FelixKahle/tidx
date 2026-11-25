@@ -1,9 +1,20 @@
 # tidx
 
+[![Crates.io](https://img.shields.io/crates/v/tidx.svg)](https://crates.io/crates/tidx)
+[![Documentation](https://docs.rs/tidx/badge.svg)](https://docs.rs/tidx)
+[![CI](https://github.com/FelixKahle/tidx/actions/workflows/ci.yml/badge.svg)](https://github.com/FelixKahle/tidx/actions/workflows/ci.yml)
+[![Licence](https://img.shields.io/crates/l/tidx.svg)](#licence)
+
 Typed dense indices for Rust.
 
 Each kind of index is a type of its own, so a table keyed by one kind cannot be read with another. To the caller
 every index is a `usize`; what it stores is the narrowest of `u8`, `u16`, `u32` and `usize` its table needs.
+
+## Usage
+
+```sh
+cargo add tidx
+```
 
 ```rust
 use tidx::{Idx, IdxKind};
@@ -29,9 +40,12 @@ let positions: Vec<usize> = MachineIdx::below(3).into_iter().map(MachineIdx::ind
 assert_eq!(positions, [0, 1, 2]);
 ```
 
-## Checks
+An index is serialized with `serde` as its bare number. The crate needs Rust 1.100 or newer.
 
-A change is done when these pass:
+## Contributing
+
+Changes reach `main` through a pull request. A change is done when these pass, which CI runs on every pull
+request:
 
 ```sh
 cargo fmt --check
