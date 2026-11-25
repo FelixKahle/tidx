@@ -1,0 +1,77 @@
+# Copyright 2026 Felix Kahle
+#
+# Licensed under either of
+#
+# Apache License, Version 2.0 (LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0)
+# MIT license (LICENSE-MIT or https://opensource.org/licenses/MIT)
+#
+# at your option. You may not use this file except in compliance with one of these licenses.
+#
+# Unless required by applicable law or agreed to in writing, software distributed under these licenses is
+# distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the licenses for the specific language governing permissions and limitations under the licenses.
+#
+# SPDX-License-Identifier: MIT OR Apache-2.0
+
+# tidx is one library crate: typed dense indices. Each kind of index is a type of its own, stored in the narrowest
+# integer its table needs and read as a `usize`. It stands below the code that keys its tables by them and depends
+# on none of it.
+
+[package]
+name = "tidx"
+description = "Typed dense indices: one type per kind of index, stored in the narrowest width its table needs"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.100"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[dependencies]
+# The std traits of `Idx` and its ranges, derived without bounds on the phantom kind. No feature is needed.
+derive-where = { version = "1.7", default-features = false }
+# The integer traits the storage of an `Idx` is generic over: `PrimInt`, `Unsigned` and the conversions to and from
+# `usize`. No feature is needed, since integers need neither `std` nor `libm`.
+num-traits = { version = "0.2.19", default-features = false }
+# `Serialize`/`Deserialize` for an `Idx`, which crosses a process boundary as its bare number; `derive` writes the
+# impls.
+serde = { version = "1.0.228", default-features = false, features = ["std", "derive"] }
+
+[dev-dependencies]
+# The round trip of an `Idx` through its serialized form.
+serde_json = { version = "1.0.140", default-features = false, features = ["std"] }
+
+[lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
+missing_docs = "deny"
+missing_debug_implementations = "deny"
+
+[lints.clippy]
+allow_attributes_without_reason = "deny"
+undocumented_unsafe_blocks = "deny"
+missing_safety_doc = "deny"
+missing_panics_doc = "deny"
+missing_errors_doc = "deny"
+unnecessary_safety_comment = "deny"
+unnecessary_safety_doc = "deny"
+
+[lints.rustdoc]
+broken_intra_doc_links = "deny"
+missing_crate_level_docs = "deny"
+bare_urls = "deny"
+invalid_codeblock_attributes = "deny"
+invalid_rust_codeblocks = "deny"
+
+# Own code stays debuggable in dev builds while dependencies are optimised.
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+debug = "line-tables-only"
+
+[profile.bench]
+inherits = "release"
