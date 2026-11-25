@@ -4,6 +4,11 @@ All notable changes to `tidx` are listed here. The versions follow [semantic ver
 
 ## Unreleased
 
+## 0.1.1 — 2026-11-25
+
+- The README shows how to add the crate and links to its documentation.
+- The package no longer carries the repository's workflows.
+
 ## 0.1.0 — 2026-11-25
 
 - `Idx<Kind>`, a typed dense index stored in the width its `IdxKind` states and read as a `usize`.

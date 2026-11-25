@@ -20,7 +20,7 @@
 [package]
 name = "tidx"
 description = "Typed dense indices: one type per kind of index, stored in the narrowest width its table needs"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 rust-version = "1.100"
 license = "MIT OR Apache-2.0"
